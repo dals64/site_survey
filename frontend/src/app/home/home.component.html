@@ -1,0 +1,55 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="side" [(opened)]="opened">
+        <div class="d-flex justify-content-center">
+            <div id="icon_container">
+                <img src="./../../assets/user2.png" alt="">
+            </div>
+        </div>
+        <div id="name">
+            {{user.name}}
+        </div>
+        <div>
+            {{user.email}}
+        </div>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-secondary" (click)="logout()">Se déconnecter</button>
+        </div>
+        <mat-nav-list>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['clients']}}]" routerLinkActive="active-link">
+                Clients
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['routeurs']}}]" routerLinkActive="active-link">
+                Routeurs
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['radios']}}]" routerLinkActive="active-link">
+                Radios
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['bsts']}}]" routerLinkActive="active-link">
+                BSTs
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['olts']}}]" routerLinkActive="active-link">
+                OLTs
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['onus']}}]" routerLinkActive="active-link">
+                ONUs
+            </a>
+            <a mat-list-item class="link" [routerLink]="[{outlets: {app:['pops']}}]" routerLinkActive="active-link">
+                POPs
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button class="btn btn-primary" (click)="opened=!opened"
+                    style="background-color: rgb(61, 62, 64); margin-bottom: 10px;">
+                    <i class="bi bi-list" style="margin-right: 5px;"></i>Menu
+                </button>
+            </div>
+            <div>
+                <img src="./../../assets/logoM.PNG" alt="">
+            </div>
+        </div>
+        <router-outlet name='app'></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

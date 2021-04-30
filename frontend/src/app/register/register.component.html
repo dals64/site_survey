@@ -1,0 +1,59 @@
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+                        <div>
+                            <div class="d-flex justify-content-center">
+                                <div style="height: 140px; width: 140px; border-radius: 50%;">
+                                    <img src="./../../assets/IMG-20210402-WA0008.jpg" width="100%" height="100%" alt="">
+                                </div>
+                            </div>
+                            <div class="text w-100">
+                                <h2>Bienvenue sur SiteSurvey App</h2>
+                                <p>Vous avez déjà un compte??</p>
+                                <a href="/login" class="btn btn-white btn-outline-white">Connectez-vous</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login-wrap p-4 p-lg-5">
+                        <div class="d-flex justify-content-center">
+                            <div class="w-100 d-flex justify-content-center">
+                                <h3 class="mb-4">Inscription</h3>
+                            </div>
+                        </div>
+                        <form class="signin-form" #loginForm="ngForm" (submit)="register()">
+                            <div class="alert alert-danger" *ngIf="iserror">
+                                {{error}}
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">Nom(s) et Prénom(s)</label>
+                                <input type="text" name="name" class="form-control" placeholder="Nom(s) et prénom(s)" [(ngModel)]="formData.name">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">Email</label>
+                                <input type="mail" name="email" class="form-control" placeholder="Adresse mail"
+                                    [(ngModel)]="formData.email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Mot de passe</label>
+                                <input type="password" class="form-control" name="password" placeholder="Mot de passe"
+                                    [(ngModel)]="formData.password">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Confirmer le mot de passe</label>
+                                <input type="password" class="form-control" name="confirm" placeholder="Confirmation du mot de passe"
+                                    [(ngModel)]="formData.confirm">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit"
+                                    class="form-control btn btn-primary submit px-3">Inscription</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

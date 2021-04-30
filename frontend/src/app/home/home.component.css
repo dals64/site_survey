@@ -1,0 +1,59 @@
+mat-sidenav-container {
+    height: 100%;
+}
+
+mat-sidenav, mat-sidenav-content {
+    padding:16px;
+}
+
+mat-sidenav {
+    background-color: rgb(61, 62, 64);
+    width: 200px;
+    color: white
+}
+
+a {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.link {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#icon_container {
+    height: 100px;
+    width: 100px;
+    background-color: rgb(235, 231, 231);
+    border-radius: 50%;
+}
+
+#icon_container img{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+#email {
+    text-align: center;
+    font-weight: 100;
+}
+
+#name {
+    margin-top: 5px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 200;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(231, 56, 56);
+    outline: none;
+}
+

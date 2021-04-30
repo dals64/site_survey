@@ -1,0 +1,187 @@
+<div class="container">
+    <h2 style="margin-top: 20px;">
+        Liste des POPs
+    </h2>
+
+    <div class="container">
+        <div class="d-flex justify-content-between" style="margin-bottom: 15px;">
+            <mat-form-field>
+                <mat-label>Filtre</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Taper pour filtrer" #input>
+            </mat-form-field>
+
+            <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)" id="addButton">
+                <i class="bi bi-plus-circle" style="margin-right: 8px; font-size:20px;"></i>Enregistrer un POP
+            </button>
+        </div>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="localisation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Localisation </th>
+                    <td mat-cell *matCellDef="let row"> {{row.localisation}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="client">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Client </th>
+                    <td mat-cell *matCellDef="let row"> {{row.client}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="bst">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> BST </th>
+                    <td mat-cell *matCellDef="let row"> {{row.bst}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="olt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> OLT </th>
+                    <td mat-cell *matCellDef="let row"> {{row.olt}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let row">
+                        <a (click)="openEditModal(update, row)" style="margin-right: 40px; color: blue;"><i
+                                class="bi bi-pen-fill"></i></a>
+                        <a (click)="openDeleteModal(delete, row)" style="color: red;"><i
+                                class="bi bi-trash-fill"></i></a>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--  ***********     ADD MODAL   **************     -->
+<!--  ***********     ADD MODAL   **************     -->
+<!--  ***********     ADD MODAL   **************     -->
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Enregistrer un POP</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form #storeForm="ngForm" (ngSubmit)="store()">
+            <div class="alert alert-danger" *ngIf="iserror">
+                {{error}}
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Localisation</label>
+                <input type="text" class="form-control" name="localisation" placeholder=""
+                    [(ngModel)]="formData.localisation">
+            </div>
+            <div class="form-group">
+                <label for="">Client</label>
+                <select class="form-control" [(ngModel)]="formData.client_id" name="client">
+                    <option *ngFor="let client of clients" [value]="client.id">{{client.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">BST</label>
+                <select class="form-control" [(ngModel)]="formData.bst_id" name="bst">
+                    <option *ngFor="let bst of bsts" [value]="bst.id">{{bst.serial_number}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">OLT</label>
+                <select class="form-control" [(ngModel)]="formData.olt_id" name="olt">
+                    <option *ngFor="let olt of olts" [value]="olt.id">{{olt.serial_number}}</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-danger" (click)="modal.close('Close click')"
+                    style="margin-right: 40px;">Annuler</button>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+<!--  ***********     DELETE MODAL   **************     -->
+<!--  ***********     DELETE MODAL   **************     -->
+<!--  ***********     DELETE MODAL   **************     -->
+
+<ng-template #delete let-modal>
+
+    <div class="modal-body">
+
+        <h3 style="text-align: center;">Voulez-vous vraiment supprimer ce POP ?</h3>
+
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')"
+                style="margin-right: 40px;">Annuler</button>
+            <button type="submit" class="btn btn-danger" (click)="deletePop()">Supprimer</button>
+        </div>
+
+    </div>
+</ng-template>
+
+<!--  ***********     UPDATE MODAL   **************     -->
+<!--  ***********     UPDATE MODAL   **************     -->
+<!--  ***********     UPDATE MODAL   **************     -->
+
+<ng-template #update let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Modifier un POP</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form #editForm="ngForm" (ngSubmit)="edit()">
+            <div class="alert alert-danger" *ngIf="iserror">
+                {{error}}
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Localisation</label>
+                <input type="text" class="form-control" name="localisation" placeholder="" [(ngModel)]="element.localisation">
+            </div>
+            <div class="form-group">
+                <label for="">Client</label>
+                <select class="form-control" [(ngModel)]="element.client_id" name="client">
+                    <option *ngFor="let client of clients" [value]="client.id">{{client.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">BST</label>
+                <select class="form-control" [(ngModel)]="element.bst_id" name="bst">
+                    <option *ngFor="let bst of bsts" [value]="bst.id">{{bst.serial_number}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">OLT</label>
+                <select class="form-control" [(ngModel)]="element.olt_id" name="olt">
+                    <option *ngFor="let olt of olts" [value]="olt.id">{{olt.serial_number}}</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-danger" (click)="modal.close('Close click')"
+                    style="margin-right: 40px;">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -1,0 +1,146 @@
+<div class="container">
+    <h2 style="margin-top: 20px;">
+        Liste des antennes radio
+    </h2>
+
+    <div class="container">
+        <div class="d-flex justify-content-between" style="margin-bottom: 15px;">
+            <mat-form-field>
+                <mat-label>Filtre</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Taper pour filtrer" #input>
+            </mat-form-field>
+
+            <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)" id="addButton">
+                <i class="bi bi-plus-circle" style="margin-right: 8px; font-size:20px;"></i>Enregistrer une antenne
+            </button>
+        </div>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="mac_address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Adresse MAC </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mac_address}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="serial_number">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Numéro de série </th>
+                    <td mat-cell *matCellDef="let row"> {{row.serial_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let row">
+                        <a (click)="openEditModal(update, row)" style="margin-right: 40px; color: blue;"><i
+                                class="bi bi-pen-fill"></i></a>
+                        <a (click)="openDeleteModal(delete, row)" style="color: red;"><i class="bi bi-trash-fill"></i></a>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--  ***********     ADD MODAL   **************     -->
+<!--  ***********     ADD MODAL   **************     -->
+<!--  ***********     ADD MODAL   **************     -->
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Enregistrer une Radio</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form #storeForm="ngForm" (ngSubmit)="store()">
+            <div class="alert alert-danger" *ngIf="iserror">{{error}}</div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Adresse MAC</label>
+                <input type="text" class="form-control" name="mac_address" placeholder="" [(ngModel)]="formData.mac_address">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Numéro de série</label>
+                <input type="text" class="form-control" name="enterprise_type" placeholder=""
+                    [(ngModel)]="formData.serial_number">
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-danger" (click)="modal.close('Close click')"
+                    style="margin-right: 40px;">Annuler</button>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+<!--  ***********     DELETE MODAL   **************     -->
+<!--  ***********     DELETE MODAL   **************     -->
+<!--  ***********     DELETE MODAL   **************     -->
+
+<ng-template #delete let-modal>
+
+    <div class="modal-body">
+
+        <h3 style="text-align: center;">Voulez-vous vraiment supprimer cette antenne radio ?</h3>
+
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')"
+                style="margin-right: 40px;">Annuler</button>
+            <button type="submit" class="btn btn-danger" (click)="delete_radio()">Supprimer</button>
+        </div>
+
+    </div>
+</ng-template>
+
+
+<!--  ***********     UPDATE MODAL   **************     -->
+<!--  ***********     UPDATE MODAL   **************     -->
+
+<ng-template #update let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Modifier une Radio</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form #editForm="ngForm" (ngSubmit)="edit()">
+            <div class="alert alert-danger" *ngIf="iserror">{{error}}</div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Adresse MAC</label>
+                <input type="text" class="form-control" name="mac_address" placeholder=""
+                    [(ngModel)]="element.mac_address">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Numéro de série</label>
+                <input type="text" class="form-control" name="enterprise_type" placeholder=""
+                    [(ngModel)]="element.serial_number">
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-danger" (click)="modal.close('Close click')"
+                    style="margin-right: 40px;">Annuler</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

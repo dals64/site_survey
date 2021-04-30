@@ -1,0 +1,50 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+h2 {
+    text-align: center;
+    color: rgb(5, 29, 5);
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.mat-form-field{
+    width: 50%;
+}
+
+#addButton {
+    background-color: rgb(92, 224, 92);
+    color: white;
+    border: none;
+}
+
+.modal-title {
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    margin-left: 30%;
+    margin-top: auto;
+}
+
+.modal-header {
+    height: 60px;
+    background-color: rgb(5, 29, 5);
+}
+
+.close {
+    color: white;
+}
+
+a :hover {
+    color: gray;
+}
